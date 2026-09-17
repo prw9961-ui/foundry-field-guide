@@ -1,0 +1,360 @@
+<title>Foundry Field Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#EDEFE9; --paper-alt:#E4E7DE; --card:#F8F9F4; --ink:#1B2621; --ink-soft:#4A564E;
+    --ink-faint:#7C8880; --rule:#C7CDBE; --rule-soft:#D9DED2; --accent:#2F6B4F; --accent-ink:#F8F9F4;
+    --focus:#B0552F; --shadow:0 1px 0 rgba(27,38,33,.06);
+    --st-ga-bg:#DCEBDF; --st-ga-fg:#1F5A34;
+    --st-beta-bg:#E7E2F3; --st-beta-fg:#5B3E9C;
+    --st-devcon-bg:#FBE7D6; --st-devcon-fg:#8A4B15;
+    --st-announced-bg:#FDE6E0; --st-announced-fg:#93321A;
+    --st-community-bg:#DCE7EF; --st-community-fg:#2C577D;
+    --st-statement-bg:#F1E4D2; --st-statement-fg:#7A5B24;
+    --st-other-bg:#E4E4E4; --st-other-fg:#4A4A4A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#13170F; --paper-alt:#191E14; --card:#1B2117; --ink:#E7E9DE; --ink-soft:#AAB3A2;
+      --ink-faint:#748175; --rule:#333B2C; --rule-soft:#262C20; --accent:#5FA97E; --accent-ink:#0E140F;
+      --focus:#E08A55; --shadow:0 1px 0 rgba(0,0,0,.4);
+      --st-ga-bg:#1E3324; --st-ga-fg:#8FD3A6;
+      --st-beta-bg:#2C2542; --st-beta-fg:#C7B4F0;
+      --st-devcon-bg:#3A2A16; --st-devcon-fg:#F0B27C;
+      --st-announced-bg:#3A1F17; --st-announced-fg:#F0987C;
+      --st-community-bg:#182B38; --st-community-fg:#9CC6E6;
+      --st-statement-bg:#332A16; --st-statement-fg:#E0C88C;
+      --st-other-bg:#2A2A2A; --st-other-fg:#B8B8B8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#13170F; --paper-alt:#191E14; --card:#1B2117; --ink:#E7E9DE; --ink-soft:#AAB3A2;
+    --ink-faint:#748175; --rule:#333B2C; --rule-soft:#262C20; --accent:#5FA97E; --accent-ink:#0E140F;
+    --focus:#E08A55; --shadow:0 1px 0 rgba(0,0,0,.4);
+    --st-ga-bg:#1E3324; --st-ga-fg:#8FD3A6;
+    --st-beta-bg:#2C2542; --st-beta-fg:#C7B4F0;
+    --st-devcon-bg:#3A2A16; --st-devcon-fg:#F0B27C;
+    --st-announced-bg:#3A1F17; --st-announced-fg:#F0987C;
+    --st-community-bg:#182B38; --st-community-fg:#9CC6E6;
+    --st-statement-bg:#332A16; --st-statement-fg:#E0C88C;
+    --st-other-bg:#2A2A2A; --st-other-fg:#B8B8B8;
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Archivo',system-ui,sans-serif;
+       padding-inline:20px; padding-block:28px 60px; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--accent); color:var(--accent-ink);}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+
+  .wrap{max-width:1040px; margin-inline:auto;}
+
+  /* ---------- Header ---------- */
+  header.top{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+             gap:16px 24px; padding-bottom:18px; margin-bottom:22px; border-bottom:1px solid var(--rule);}
+  .brand{display:flex; flex-direction:column; gap:2px;}
+  .brand .eyebrow{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--accent);}
+  .brand h1{font-size:clamp(28px,4vw,40px); font-weight:600; margin:0; text-wrap:balance; letter-spacing:-.01em;}
+  .brand .sub{color:var(--ink-soft); font-size:14.5px; max-width:52ch;}
+  .stats{display:flex; gap:22px; font-family:'JetBrains Mono',monospace;}
+  .stat{display:flex; flex-direction:column; align-items:flex-end;}
+  .stat b{font-size:22px; font-variant-numeric:tabular-nums; line-height:1.1;}
+  .stat span{font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em;}
+
+  /* ---------- Controls ---------- */
+  .controls{display:flex; flex-wrap:wrap; gap:10px 12px; align-items:center; margin-bottom:22px;}
+  .search{position:relative; flex:1 1 240px; min-width:200px;}
+  .search input{width:100%; padding:11px 14px 11px 38px; border-radius:8px; border:1px solid var(--rule);
+                background:var(--card); color:var(--ink); font-size:14.5px; font-family:inherit;}
+  .search input::placeholder{color:var(--ink-faint);}
+  .search svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:.55; pointer-events:none;}
+  .chips{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{border:1px solid var(--rule); background:var(--card); color:var(--ink-soft);
+        border-radius:999px; padding:6px 12px; font-size:12.5px; font-weight:500; white-space:nowrap;
+        display:flex; align-items:center; gap:6px; transition:background .12s,color .12s,border-color .12s;}
+  .chip .dot{width:7px; height:7px; border-radius:50%; background:var(--dot,var(--ink-faint));}
+  .chip.active{background:var(--dot,var(--accent)); color:#fff; border-color:transparent;}
+  .chip:hover:not(.active){border-color:var(--ink-faint);}
+  .chip.clear{margin-left:auto;}
+  .count-line{font-size:12px; color:var(--ink-faint); margin-bottom:14px; font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- Index grid ---------- */
+  #index{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:12px;}
+  .card{background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:16px 16px 14px;
+        text-align:left; display:flex; flex-direction:column; gap:8px; box-shadow:var(--shadow);
+        border-left:3px solid var(--layer-color,var(--rule)); transition:transform .12s, border-color .12s;}
+  .card:hover{transform:translateY(-2px); border-color:var(--ink-faint);}
+  .card .num{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint);}
+  .card h3{font-size:17.5px; font-weight:500; font-style:italic; margin:0; line-height:1.25; text-wrap:balance;}
+  .card .tag{font-size:12.5px; color:var(--ink-soft); line-height:1.4; flex:1;}
+  .card .meta{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:4px;}
+  .layer-label{font-size:10.5px; color:var(--layer-color,var(--ink-faint)); font-weight:600;
+               text-transform:uppercase; letter-spacing:.05em;}
+  .badge{font-size:10px; font-weight:600; padding:3px 8px; border-radius:999px; white-space:nowrap;
+         text-transform:uppercase; letter-spacing:.03em;}
+  .st-ga{background:var(--st-ga-bg); color:var(--st-ga-fg);}
+  .st-beta{background:var(--st-beta-bg); color:var(--st-beta-fg);}
+  .st-devcon{background:var(--st-devcon-bg); color:var(--st-devcon-fg);}
+  .st-announced{background:var(--st-announced-bg); color:var(--st-announced-fg);}
+  .st-community{background:var(--st-community-bg); color:var(--st-community-fg);}
+  .st-statement{background:var(--st-statement-bg); color:var(--st-statement-fg);}
+  .st-other{background:var(--st-other-bg); color:var(--st-other-fg);}
+
+  .empty{grid-column:1/-1; text-align:center; padding:50px 20px; color:var(--ink-faint);}
+  .empty .serif{font-style:italic; font-size:20px; color:var(--ink-soft); display:block; margin-bottom:6px;}
+
+  /* ---------- Plate (detail) view ---------- */
+  #plate{display:none;}
+  #plate.open{display:block;}
+  #index.hidden, .controls.hidden{display:none;}
+  .plate-bar{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; gap:12px;}
+  .back-btn{display:flex; align-items:center; gap:6px; background:none; border:1px solid var(--rule);
+            border-radius:8px; padding:8px 14px; font-size:13px; color:var(--ink-soft);}
+  .back-btn:hover{border-color:var(--ink-faint); color:var(--ink);}
+  .nav-btns{display:flex; gap:8px; font-family:'JetBrains Mono',monospace; font-size:12px; align-items:center; color:var(--ink-faint);}
+  .nav-btns button{background:var(--card); border:1px solid var(--rule); border-radius:8px; width:36px; height:36px;
+                    display:flex; align-items:center; justify-content:center; color:var(--ink);}
+  .nav-btns button:hover{border-color:var(--ink-faint);}
+  .nav-btns button:disabled{opacity:.35; cursor:default;}
+
+  .plate-card{background:var(--card); border:1px solid var(--rule); border-radius:14px; padding:36px 40px 32px;
+              border-top:5px solid var(--layer-color,var(--accent)); box-shadow:0 2px 0 rgba(27,38,33,.05);}
+  @media (max-width:560px){ .plate-card{padding:26px 20px 24px;} }
+  .plate-eyebrow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
+  .specimen-no{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint);}
+  .plate-card h2{font-size:clamp(26px,4vw,36px); font-style:italic; font-weight:500; margin:0 0 6px; text-wrap:balance;}
+  .plate-tag{color:var(--ink-soft); font-size:16px; margin-bottom:20px; max-width:60ch;}
+  .plate-desc{font-size:15px; line-height:1.65; max-width:64ch; margin-bottom:22px;}
+  .plate-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:28px; margin-bottom:6px;}
+  @media (max-width:680px){ .plate-grid{grid-template-columns:1fr;} }
+  .field-marks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .field-marks li{font-size:13.5px; padding-left:18px; position:relative; color:var(--ink-soft); line-height:1.4;}
+  .field-marks li::before{content:"—"; position:absolute; left:0; color:var(--layer-color,var(--accent));}
+  .side-label{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase;
+              letter-spacing:.08em; color:var(--ink-faint); margin-bottom:9px; display:block;}
+  .side-block + .side-block{margin-top:20px;}
+  .sources-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px;}
+  .sources-list li{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);
+                    background:var(--paper-alt); border-radius:6px; padding:7px 10px; line-height:1.4;}
+  .sources-list b{color:var(--ink); font-weight:600;}
+  .plate-footer{margin-top:26px; padding-top:16px; border-top:1px dashed var(--rule-soft);
+                display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+                font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-faint);}
+
+  @keyframes flipIn{from{opacity:0; transform:translateX(14px) rotateY(-4deg);} to{opacity:1; transform:none;}}
+  .plate-card.animating{animation:flipIn .28s ease-out;}
+  @media (prefers-reduced-motion: reduce){ .plate-card.animating{animation:none;} .card{transition:none;} }
+
+  footer.credit{margin-top:44px; text-align:center; font-family:'JetBrains Mono',monospace;
+                font-size:11px; color:var(--ink-faint);}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="eyebrow">Personal reference · foundry-expert knowledge base</span>
+      <h1>Foundry Field Guide</h1>
+      <p class="sub">A specimen catalog of Palantir Foundry &amp; AIP capabilities — classified by platform layer, each entry cited back to its source.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="statTotal">0</b><span>Specimens</span></div>
+      <div class="stat"><b id="statGA">0</b><span>GA</span></div>
+      <div class="stat"><b id="statDate">—</b><span>Curated</span></div>
+    </div>
+  </header>
+
+  <div class="controls" id="controls">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search specimens — name, capability, tool, status…" autocomplete="off">
+    </div>
+    <div class="chips" id="layerChips"></div>
+  </div>
+  <div class="count-line" id="countLine"></div>
+
+  <div id="index"></div>
+
+  <section id="plate">
+    <div class="plate-bar">
+      <button class="back-btn" id="backBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to index
+      </button>
+      <div class="nav-btns">
+        <button id="prevBtn" aria-label="Previous specimen" title="Previous (←)">&#8592;</button>
+        <span id="plateCounter">— / —</span>
+        <button id="nextBtn" aria-label="Next specimen" title="Next (→)">&#8594;</button>
+      </div>
+    </div>
+    <div class="plate-card" id="plateCard"></div>
+  </section>
+
+  <footer class="credit">Generated <span id="footDate"></span> from docs, DevCon talk notes, release announcements, blog, community threads &amp; exec commentary · regenerate any time the knowledge base moves</footer>
+</div>
+
+<script>
+(function(){
+  var DATA = {"generated": "2026-09-16", "layers": [{"id": "data", "name": "Data Integration", "color": "#7A6A4F"}, {"id": "ontology", "name": "Ontology", "color": "#2F6B4F"}, {"id": "functions", "name": "Functions", "color": "#6B5B95"}, {"id": "applications", "name": "Applications", "color": "#3D5A80"}, {"id": "aip", "name": "AIP", "color": "#7A4B8C"}, {"id": "automation", "name": "Automation", "color": "#B0552F"}, {"id": "devtools", "name": "Developer Tools", "color": "#3D6B6B"}, {"id": "governance", "name": "Observability & Governance", "color": "#5C5C6E"}, {"id": "frontier", "name": "Frontier / Sovereign AI", "color": "#8C5B3A"}], "features": [{"n": 1, "id": "pipeline-builder", "name": "Pipeline Builder", "layer": "data", "tagline": "No-code, point-and-click data integration.", "description": "Foundry's primary application for building data-integration pipelines: visual, schema-safe, with built-in LLM assistance and direct-to-Ontology output. Python is the only pipeline coding language it supports internally.", "marks": ["Compiles to Spark", "Schema-safe previews", "Writes directly to object/link types", "Media & geospatial processing", "Built-in LLM assist"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "pipeline-builder-overview.md"}]}, {"n": 2, "id": "code-repositories", "name": "Code Repositories", "layer": "data", "tagline": "Git-backed IDE for production transforms.", "description": "Web IDE for writing transforms in Python, Java, SQL, or Mesa, with full Git version control, PR review, IntelliSense, and CI/CD. The Python path is the most full-featured (@transform.using, PySpark/Pandas/Polars/DuckDB, incremental computation, external API calls).", "marks": ["Git branching + PR review", "IntelliSense/error-check", "CI/CD", "Incremental computation"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "code-repositories-overview.md"}, {"label": "docs", "ref": "transforms-python-overview.md"}]}, {"n": 3, "id": "global-branching", "name": "Global Branching", "layer": "data", "tagline": "Branch, review, and merge changes across the whole platform.", "description": "Cross-platform branching so changes to data, ontology, and logic can be proposed and merged like code. Reached General Availability for all users on all enrollments the week of May 18, 2026.", "marks": ["Cross-platform (not just code repos)", "Full-fidelity branch/review/merge"], "status": "GA — May 18, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-05.md", "sources": [{"label": "releases", "ref": "2026-05.md"}]}, {"n": 4, "id": "sql-studio", "name": "SQL Studio", "layer": "data", "tagline": "Interactive SQL across tabular data and Ontology objects.", "description": "A dedicated Foundry application for writing and running SQL queries, spanning both raw tabular datasets and Ontology object types in one interface. Built on two engines (Furnace for tabular data, Ontology SQL for objects), with read/write support and publishable SQL functions. Entered beta in May 2026 and reached General Availability the week of June 15, 2026.", "marks": ["Queries tabular + Ontology data together", "Furnace routes queries between Trino and Spark", "CREATE/INSERT/UPDATE/DELETE on Iceberg tables", "Shareable SQL worksheets"], "status": "GA — June 15, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-05.md (beta), releases/2026-06.md (GA)", "sources": [{"label": "releases", "ref": "2026-05.md"}, {"label": "releases", "ref": "2026-06.md"}]}, {"n": 5, "id": "federated-compute-pushdown", "name": "Federated Compute Pushdown (Snowflake/Databricks/BigQuery)", "layer": "data", "tagline": "Run pipeline compute inside an external warehouse while Foundry keeps orchestration and governance.", "description": "Pipeline Builder transforms on Foundry Iceberg tables can select an external-compute profile (e.g. Snowflake via Snowpark Connect) instead of Spark or single-node engines, so the query executes inside the external system while Foundry retains orchestration, governance, and lineage over the pipeline. Decouples the earlier requirement that data and compute be co-located in the same external system.", "marks": ["Snowpark Connect compute profile in Pipeline Builder", "Demoed end-to-end on an Iceberg-to-Iceberg pipeline", "'External queries' link jumps to the run in Snowflake", "Same pattern extends to Databricks/BigQuery virtual tables"], "status": "Shown at DevCon 5 (demoed working — no GA date stated)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "deep-dive-interoperability-at-scale-with-the-multimodal-data-plane-devcon-5"}]}, {"n": 6, "id": "iceberg-lightweight-compute", "name": "Iceberg Tables + Lightweight Compute", "layer": "data", "tagline": "Optimizing pipelines with open table formats.", "description": "DevCon 4 deep-dive on using Apache Iceberg virtual tables paired with lightweight compute to cut pipeline cost/latency versus traditional Spark-heavy jobs. Community threads separately flag current limitations on Iceberg virtual-table writes.", "marks": ["Open table format (Iceberg)", "Lower-cost compute path", "Known limitation: write_table single-file output"], "status": "Shown at DevCon 4", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "deep-dive-optimizing-data-pipelines-with-iceberg-tables-and-lightweight-compute-"}, {"label": "community", "ref": "6304 / 5467"}]}, {"n": 7, "id": "object-link-action-types", "name": "Object, Link & Action Types", "layer": "ontology", "tagline": "The semantic backbone: objects, relationships, and the write-back layer.", "description": "Object types model real-world entities, link types model relationships between them, and Action types are how humans or agents write back to the operational world. Together they're the Ontology's grounding vocabulary, shared by every app and agent.", "marks": ["Object types ≠ tables", "Action types = write-back, not just data"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "object-link-types / action-types-overview.md"}]}, {"n": 8, "id": "interfaces", "name": "Interfaces", "layer": "ontology", "tagline": "Shared contracts across object types.", "description": "A typed contract layer letting multiple object types share common properties and behavior, so applications and agents can be written against the interface rather than every concrete object type.", "marks": ["Cross-object-type polymorphism", "Reduces app-side type-checking"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "interfaces-interface-overview.md"}]}, {"n": 9, "id": "ontology-best-practices", "name": "Ontology Best Practices & Anti-patterns", "layer": "ontology", "tagline": "Palantir's own opinionated design guidance.", "description": "A substantial (~19.5K-char) documented guide on how to design an ontology well, and the specific anti-patterns Palantir has seen customers fall into.", "marks": ["Official, opinionated (not just reference)", "Anti-pattern catalog included"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "ontology-ontology-best-practices-and-anti-patterns.md"}]}, {"n": 10, "id": "ontology-branching", "name": "Ontology Branching (sandbox evolution)", "layer": "ontology", "tagline": "Branch Object / Automation / Plan / Forecast — agents proposing changes safely.", "description": "Named branch types shown at DevCon 5's opening keynote: fleets of agents securely propose, review, and merge new ontology structure and outputs in sandboxes, at machine speed, with full auditing and guardrails.", "marks": ["Branch Object", "Branch Automation", "Branch Plan", "Branch Forecast", "Full audit trail"], "status": "Shown at DevCon 5 (framing/vision talk — no GA date stated)", "statusClass": "st-devcon", "firstObserved": "DevCon 5 opening keynote", "sources": [{"label": "devcon5", "ref": "akshay-krishnaswamy-opening-remarks-devcon-5"}]}, {"n": 11, "id": "scenario-simulation", "name": "Scenario Simulation", "layer": "ontology", "tagline": "Fork the operational world to simulate cascading consequences.", "description": "Stacked Scenario 1/2/3 layers of the same decision space, each a fork for what-if simulation of cascading real-world consequences before acting — beyond atomic transactions or code commits.", "marks": ["Multiple parallel scenario forks", "Simulates cascading, not just point, effects", "Concrete demo: data-persistent sandbox with submit-for-approval + approve-and-merge"], "status": "Shown at DevCon 5 (vision talk + concrete demo — Ontology Scenarios in the Ontology Foundations session)", "statusClass": "st-devcon", "firstObserved": "DevCon 5 opening keynote", "sources": [{"label": "devcon5", "ref": "akshay-krishnaswamy-opening-remarks-devcon-5"}, {"label": "devcon5", "ref": "product-launch-ontology-foundations-devcon-5"}]}, {"n": 12, "id": "knowledge-nodes", "name": "Knowledge Nodes (Advanced Agent Reasoning)", "layer": "ontology", "tagline": "Structuring institutional knowledge for agent reasoning.", "description": "DevCon 4 deep-dive (with First Solar) on Knowledge Nodes as a way to encode institutional/tribal knowledge into the Ontology so agents can reason over it reliably.", "marks": ["Customer case study: First Solar", "Targets agent reasoning reliability"], "status": "Shown at DevCon 4", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "deep-dive-advanced-agent-reasoning-with-knowledge-nodes-x-first-solar-devcon-4"}]}, {"n": 13, "id": "object-property-security", "name": "Object & Property Security Policies", "layer": "ontology", "tagline": "Fine-grained permissions inside Ontology Manager.", "description": "Define permissions at the object-type and individual-property level directly in Ontology Manager. Reached GA across Foundry enrollments in April 2026.", "marks": ["Property-level (not just object-level) permissions"], "status": "GA — April 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-04.md", "sources": [{"label": "releases", "ref": "2026-04.md"}]}, {"n": 14, "id": "ontology-backed-apps", "name": "Ontology-backed App Building", "layer": "ontology", "tagline": "Apps built natively on Ontology primitives.", "description": "DevCon 4 product launch for building applications directly on top of Ontology objects/links/actions rather than bespoke data models.", "marks": ["App layer talks directly to Ontology primitives"], "status": "Shown at DevCon 4 (product launch)", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "product-launch-ontology-backed-app-building-devcon-4"}]}, {"n": 15, "id": "ontology-structs", "name": "Structs (Composite Properties)", "layer": "ontology", "tagline": "A single property holding multiple named sub-fields, reducible to one value or one 'main field.'", "description": "Ports Gotham's composite-properties concept to Foundry: one property (e.g. Address) holds several named sub-fields (Street, City, State, Postal Code), configured in Pipeline Builder and rendered as a grouped field set in action forms. New array-reducer logic collapses a multi-value struct property to a single displayed value (e.g. 'most recent by Last Modified On'), and a new 'struct main field' designation lets a struct behave like a plain primitive (e.g. a geo point) everywhere else, with the rest of its metadata available on hover.", "marks": ["Struct creation tagged Experimental in Pipeline Builder", "Array reducers & struct main fields tagged 'Requires reindex' / 'Limited support'", "Also used to structure LLM/AIP Logic output"], "status": "Experimental — shown at DevCon 5", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "deep-dive-advanced-ontology-devcon-5"}]}, {"n": 16, "id": "ontology-transactions", "name": "Transactions", "layer": "ontology", "tagline": "Bundle multiple Ontology actions into one atomic commit — all succeed or all roll back.", "description": "A primitive that lets a function bundle several Ontology actions (e.g. unassign-nurse + unassign-doctor + unassign-room-prep for a cancellation) so that either every action succeeds or, if any fails, all writes are rolled back and nothing is persisted. Aimed at cases where separate teams own separate actions/repos that one developer needs to compose without partial-failure risk.", "marks": ["All-run-or-all-fail semantics", "Composes actions owned by different teams/repos"], "status": "Shown at DevCon 5 (\"the feature we just built\" — no GA date)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ontology-foundations-devcon-5"}]}, {"n": 17, "id": "functions-ts-python", "name": "Functions (TypeScript v1/v2, Python)", "layer": "functions", "tagline": "Typed logic callable from Workshop, OSDK, and AIP.", "description": "Function-backed columns and Action types, written in TypeScript (v1 or v2) or Python, callable across Workshop, OSDK apps, and AIP tooling.", "marks": ["Function-backed columns", "Function-backed Action types", "TS v1 vs v2 getting-started paths"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "functions-overview.md + typescript/python getting-started"}]}, {"n": 18, "id": "workshop", "name": "Workshop", "layer": "applications", "tagline": "Foundry's primary no-code application builder.", "description": "The main app-building surface: sections, filters, object lists, widgets, all wired to Ontology objects and Actions. AI FDE can now create and edit Workshop modules directly — called 'one of the most requested features' at DevCon 5.", "marks": ["Drag-and-drop layout", "Now AI-FDE-editable", "Widget library"], "status": "GA (AI-FDE editing shown at DevCon 5)", "statusClass": "st-ga", "firstObserved": "Documented baseline + DevCon 5", "sources": [{"label": "docs", "ref": "workshop-overview.md"}, {"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 19, "id": "slate", "name": "Slate", "layer": "applications", "tagline": "HTML/JS power-user apps.", "description": "A more code-forward app-building surface than Workshop, for power users who want direct HTML/JS control.", "marks": ["Lower-level than Workshop", "Direct HTML/JS"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "slate-overview.md"}]}, {"n": 20, "id": "osdk", "name": "OSDK (Ontology SDK)", "layer": "applications", "tagline": "Typed SDKs — TypeScript, Python, Java — for external apps.", "description": "Generates typed client SDKs against your Ontology for building applications outside Foundry's own app builders, including an OSDK React flavor for front-end apps.", "marks": ["TS / Python / Java clients", "OSDK React for front-end"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "ontology-sdk-overview.md"}, {"label": "docs", "ref": "ontology-sdk-react-applications-overview.md"}]}, {"n": 21, "id": "workflow-builder", "name": "Workflow Builder", "layer": "applications", "tagline": "Building structured, multi-step operational workflows.", "description": "DevCon 4 product launch for a builder aimed at structured, multi-step workflows rather than single-screen apps.", "marks": ["Multi-step, not single-screen", "Product-launch talk"], "status": "Shown at DevCon 4 (product launch)", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "product-launch-workflow-builder-devcon-4"}]}, {"n": 22, "id": "provider-api-proxy", "name": "Provider API Proxy", "layer": "applications", "tagline": "Proxying external provider APIs through Foundry's governance layer.", "description": "DevCon 4 product launch — lets external API calls (e.g. to model providers or partner systems) route through Foundry with its governance, auth, and observability intact.", "marks": ["External API calls under Foundry governance"], "status": "Shown at DevCon 4 (product launch)", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "product-launch-provider-api-proxy-devcon-4"}]}, {"n": 23, "id": "partner-portals", "name": "Partner Portals & Public Dashboards", "layer": "applications", "tagline": "Extending Foundry apps to external, non-Foundry-licensed users.", "description": "DevCon 4 deep-dive on patterns for building portals and dashboards for external partners/the public who don't have Foundry seats.", "marks": ["External/public audience, not internal users"], "status": "Shown at DevCon 4", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "deep-dive-building-partner-portals-to-public-dashboards-devcon-4"}]}, {"n": 24, "id": "quiver-contour-notepad", "name": "Quiver, Contour, Notepad", "layer": "applications", "tagline": "Foundry's analytics application trio.", "description": "Quiver, Contour, and Notepad round out Foundry's built-in analytics surface alongside Workshop-based apps.", "marks": ["Purpose-built analytics apps, distinct from Workshop"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "quiver / contour / notepad -overview.md"}]}, {"n": 25, "id": "vulcan", "name": "Vulcan", "layer": "applications", "tagline": "3D CAD/engineering-geometry viewer wired directly into the Ontology.", "description": "A standalone (and Workshop-embeddable) 3D visualization application that renders mesh models, 2D engineering drawings, and point clouds straight from Ontology data with no conversion step. Annotations, measurements, and section planes are written back to the Ontology as objects, so they can drive alerts, dashboards, or cross-team sharing.", "marks": ["Reads GLB/GLTF/STL/OBJ/PLY/3MF, DXF, LAS/LAZ natively", "Annotations/measurements persist as Ontology objects", "Bidirectional Workshop widget (camera, part selection, measurements)"], "status": "Beta — Sept 7, 2026", "statusClass": "st-beta", "firstObserved": "releases/2026-09.md", "sources": [{"label": "releases", "ref": "2026-09.md"}]}, {"n": 26, "id": "sql-query-variables-workshop", "name": "SQL Query Variables (Workshop)", "layer": "applications", "tagline": "Define a Workshop variable with an Ontology SQL query instead of a function.", "description": "A Workshop variable-definition type that computes its value by running an Ontology SQL query directly inside the module — object-set/interface-set variables are exposed as SQL tables, other variables bind as query parameters, and AIP can draft the query from a natural-language description. Returns single values, arrays, or structs, recomputing automatically as bound inputs change.", "marks": ["No separate function to build/deploy", "Window functions (RANK/LAG/LEAD) in one statement", "AIP-drafted SQL from a text prompt", "Scoped to one module — use SQL Functions to share logic across apps"], "status": "GA — Aug 25, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-08.md", "sources": [{"label": "releases", "ref": "2026-08.md"}]}, {"n": 27, "id": "ai-fde", "name": "AI FDE", "layer": "aip", "tagline": "An agent that operates Foundry via natural language — reached GA March 12, 2026.", "description": "Translates natural-language requests into real Foundry operations: data transforms, ontology edits, Logic functions, Workshop apps, Automate automations. DevCon 5's flagship demo showed it decomposing a problem, writing AIP Logic + eval suites, iterating from 10% to 90% pass rate, then fixing itself from ontology-codified production feedback.", "marks": ["GA March 12, 2026", "Exploration vs Logic-creation modes", "Eval-driven self-repair", "Builds Workshop apps & Automate rules"], "status": "GA — March 12, 2026", "statusClass": "st-ga", "firstObserved": "DevCon 5 + AI FDE overview docs", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}, {"label": "docs", "ref": "ai-fde/overview"}]}, {"n": 28, "id": "ai-fde-skills", "name": "AI FDE Skills", "layer": "aip", "tagline": "Composable, reusable capabilities for AI FDE sessions.", "description": "A Skills system for AI FDE surfaced enough that a community thread on 'tips for AI FDE Skills.md' has real engagement — practitioners are actively figuring out best practices.", "marks": ["Community-driven best-practice discovery", "See also the community AI FDE library"], "status": "Available, patterns still emerging", "statusClass": "st-other", "firstObserved": "community/6921", "sources": [{"label": "community", "ref": "6921-tips-for-ai-fde-skills-md.md"}]}, {"n": 29, "id": "eval-driven-dev-loop", "name": "Eval-Driven Development Loop", "layer": "aip", "tagline": "AIP Evals baked directly into AI FDE's workflow.", "description": "AI FDE writes a failing eval test case from a requirement, runs the suite, reads failures, edits the Logic function, re-runs — iterating until it passes. Test cases can source from Manual entry, an Object set, or live Production runs.", "marks": ["10%→90% pass rate in one iteration (DevCon 5 demo)", "Production-run-sourced test cases"], "status": "Shown at DevCon 5 (live demo)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}, {"label": "docs", "ref": "aip-evals-overview.md"}]}, {"n": 30, "id": "ontology-feedback-loop", "name": "Ontology-Codified Feedback Loop", "layer": "aip", "tagline": "Production rejections become ontology objects an agent can act on.", "description": "When a user rejects an AI recommendation in Workshop, the free-text 'what went wrong' is stored as a linked Ontology feedback object. AI FDE can then query that feedback set, investigate, and patch the failing logic — shown taking a suite from 12/13 to 13/13.", "marks": ["Feedback = first-class Ontology object", "Closes the loop without a human re-writing the prompt"], "status": "Shown at DevCon 5 (live demo)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 31, "id": "feedback-quality-gate", "name": "Feedback Quality-Gate Agent", "layer": "aip", "tagline": "'Agents building agents' — a second agent that improves the first agent's feedback.", "description": "Because raw production feedback is often just 'this is bad,' AI FDE built a second agent (via the same eval-driven loop) that intercepts low-quality feedback and asks a clarifying question before it's accepted.", "marks": ["Agent-built-by-agent", "Improves signal quality at the source"], "status": "Shown at DevCon 5 (live demo)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 32, "id": "smart-context-mgmt", "name": "Smart Context Management", "layer": "aip", "tagline": "Keeping AI FDE sessions coherent as task scope grows.", "description": "A `manage_context` capability that can hide stale context items mid-session, labeled 'Increased Autonomy' on the DevCon 5 capability grid.", "marks": ["manage_context tool", "Targets long-running session coherence"], "status": "Shown at DevCon 5", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 33, "id": "automatic-mode-switching", "name": "Automatic Mode Switching", "layer": "aip", "tagline": "AI FDE changes its own operating mode mid-task.", "description": "AI FDE calls its own `change_mode` tool to move between Exploration (research, search-enabled) and Logic-creation modes without being told to, letting it access the full breadth of the platform for one task.", "marks": ["change_mode tool", "Labeled 'Increased Autonomy'"], "status": "Shown at DevCon 5", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 34, "id": "solution-design-tools", "name": "Solution Design Tools", "layer": "aip", "tagline": "AI FDE drafts an architecture diagram, then uses it as its own task list.", "description": "`create_solution_design_diagram` produces a layered Data/Ontology/Application diagram for an end-to-end workflow; AI FDE then works through that plan as a checklist to build each piece.", "marks": ["Diagram doubles as an execution plan"], "status": "Shown at DevCon 5", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 35, "id": "aip-logic", "name": "AIP Logic", "layer": "aip", "tagline": "No-code LLM function builder.", "description": "Block- or graph-based editor for building LLM-backed functions: system prompts, tool calls, semantic search blocks, structured (struct) output, validators.", "marks": ["Block and Graph editing modes", "Struct output with validators", "Semantic search block type"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "logic-overview.md"}]}, {"n": 36, "id": "aip-assist", "name": "AIP Assist", "layer": "aip", "tagline": "Platform-wide documentation copilot, RAG-based.", "description": "A chatbot available across Foundry that answers platform/doc questions via retrieval-augmented generation, and can be pointed at custom content sources (e.g. a Markdown docs repo) for org-specific answers.", "marks": ["RAG over official + custom docs", "Deployable as source-backed chatbots"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "aip overview / assist"}]}, {"n": 37, "id": "aip-chatbot-agent-studio", "name": "AIP Chatbot Studio / Agent Studio", "layer": "aip", "tagline": "No-code chatbot and agent building, deployable via OSDK.", "description": "Build and deploy chatbots/agents without code, internally on the platform or externally through OSDK-based apps.", "marks": ["No-code build", "Internal + external (OSDK) deployment"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "chatbot-studio-overview.md"}]}, {"n": 38, "id": "aip-analyst", "name": "AIP Analyst", "layer": "aip", "tagline": "Conversational interface for exploring Ontology data.", "description": "A conversational AI surface purpose-built for exploring Ontology object data without writing queries by hand. Reached GA the week of April 13, 2026.", "marks": ["Ontology-native conversational exploration"], "status": "GA — April 13, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-03.md, 2026-04.md", "sources": [{"label": "releases", "ref": "2026-03.md / 2026-04.md"}]}, {"n": 39, "id": "aip-evolve", "name": "AIP Evolve", "layer": "aip", "tagline": "Autonomous cost/efficiency tuning for agents in production — reached GA September 8, 2026.", "description": "Coordinates fleets of AI FDE agents to improve AI systems in AIP: define a target, optimization goal, validation strategy, and constraints, then review the resulting proposal — validation results, output comparisons, confidence assessment — in Global Branching before merging. Early adopters have used it to cut AI costs, improve eval performance, and migrate workloads to open-source models.", "marks": ["Beta Aug 18, 2026 → GA Sept 8, 2026", "Guided goals: cost, latency, eval score, model migration", "Interactive agent graph + Global Branching review"], "status": "GA — Sept 8, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-08.md (beta), releases/2026-09.md (GA)", "sources": [{"label": "releases", "ref": "2026-08.md"}, {"label": "releases", "ref": "2026-09.md"}]}, {"n": 40, "id": "ontology-mcp", "name": "Ontology MCP (OMCP) + AIP Agents", "layer": "aip", "tagline": "Ontology exposed to external AI IDEs and agents over MCP.", "description": "DevCon 4 product launch pairing AIP Agents with an MCP server exposing Ontology so external AI IDEs/agents can read and act on it directly.", "marks": ["MCP-native Ontology access", "Paired with AIP Agents launch"], "status": "Shown at DevCon 4 (product launch)", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "product-launch-aip-agents-and-ontology-mcp-devcon-4"}]}, {"n": 41, "id": "mindkit", "name": "Mindkit", "layer": "aip", "tagline": "DevCon 5 product launch — agent tooling (name-level, details in notes).", "description": "A DevCon 5 product-launch talk; consult the full talk note for demo specifics before citing capability claims.", "marks": ["DevCon 5 product launch"], "status": "Shown at DevCon 5 (product launch)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-mindkit-devcon-5"}]}, {"n": 42, "id": "live-audio-voice-agents", "name": "Live Audio / Real-Time Voice Agents", "layer": "aip", "tagline": "Voice-driven agents that read and write the Ontology, with a 5-layer security model for PHI/PII.", "description": "A real-time voice interface layered on the Ontology: an in-app spoken request can generate Ontology Scenarios (e.g. scheduling options), and outbound calls can be placed to affected parties for identity-verified, HIPAA-aware confirmations. Palantir paired the launch with a five-layer security architecture — network isolation via dedicated subdomains, InfoSec-gated data release, geo-locked regional model hubs (EU/US) for data residency, and customer-defined deterministic auth gates.", "marks": ["Outbound + inbound real-time voice", "Geo-locked model hubs (EU/US) via AIP Model Service", "Refuses third-party data disclosure (HIPAA-style) autonomously"], "status": "Shown at DevCon 5 (actively in development — no GA date)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-ontology-foundations-devcon-5"}]}, {"n": 43, "id": "automate", "name": "Automate", "layer": "automation", "tagline": "Event- and schedule-triggered actions.", "description": "Foundry's automation engine: triggers on time, object changes, metric thresholds, or automation dependencies. AI FDE can now author Automate automations directly from a natural-language prompt.", "marks": ["Time / object-change / threshold / dependency triggers", "Now AI-FDE-authorable"], "status": "GA (AI-FDE authoring shown at DevCon 5)", "statusClass": "st-ga", "firstObserved": "Documented baseline + DevCon 5", "sources": [{"label": "docs", "ref": "automate-overview.md"}, {"label": "devcon5", "ref": "product-launch-ai-fde-devcon-5"}]}, {"n": 44, "id": "foundry-rules", "name": "Foundry Rules", "layer": "automation", "tagline": "Bring domain expertise into real-time alerting.", "description": "Lets subject-matter experts encode rules for real-time alerting without writing pipeline code — announced as 'Foundry Rules & Real-Time Alerting.'", "marks": ["Expert-authored rules, not just engineer-authored"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "foundry-rules-overview.md"}]}, {"n": 45, "id": "process-orchestration", "name": "Process Orchestration", "layer": "automation", "tagline": "Coordinating multi-system operational processes — shown in production at Eaton.", "description": "DevCon 4 'Code in Production' case study with Eaton on orchestrating real operational processes across systems using Foundry.", "marks": ["Real production deployment (Eaton)", "Cross-system coordination"], "status": "Shown at DevCon 4 (in production)", "statusClass": "st-devcon", "firstObserved": "DevCon 4", "sources": [{"label": "devcon4", "ref": "code-in-production-process-orchestration-x-eaton-devcon-4"}]}, {"n": 46, "id": "orchestrator", "name": "Orchestrator", "layer": "automation", "tagline": "A durable, interruptible execution runtime for automations that can run for months.", "description": "An execution runtime for Foundry Functions/AIP Logic that supports long-running, durable (checkpointed), and interruptible executions — an automation can pause for days awaiting human or external input via an `Await object condition` block, then resume exactly where it left off. Demoed orchestrating a medical prior-authorization workflow end-to-end, including pausing for a human document upload and for a payer's email reply.", "marks": ["Await object condition block replaces hand-rolled state machines/queues", "Executions can span hours to months", "Failure resumes mid-process, not from scratch", "Paired with Workflow Lineage cost/model-usage observability"], "status": "Shown at DevCon 5 (available in build sessions — no GA date)", "statusClass": "st-devcon", "firstObserved": "DevCon 5", "sources": [{"label": "devcon5", "ref": "product-launch-enterprise-automation-devcon-5"}]}, {"n": 47, "id": "palantir-mcp", "name": "Palantir MCP", "layer": "devtools", "tagline": "70+ tools exposing Foundry to external AI IDEs.", "description": "An MCP server giving external AI coding tools direct access to build/modify Foundry applications — datasets, ontology, code repos, Python transforms, OSDK apps, data connections. Rolled out to all Foundry enrollments the week of June 22, 2026.", "marks": ["70-80+ tools across 14 categories", "search_foundry_documentation tool", "All enrollments since June 22, 2026"], "status": "GA — June 22, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-06.md", "sources": [{"label": "releases", "ref": "2026-06.md"}, {"label": "docs", "ref": "palantir-mcp/overview"}]}, {"n": 48, "id": "model-providers-in-aip", "name": "Expanded Model Providers in AIP", "layer": "devtools", "tagline": "Anthropic (via Azure) and Google Gemini (via Vertex) added to AIP.", "description": "June 2026: Anthropic Claude models served through Azure became available in AIP; Gemini family models became accessible from AIP applications in IL5 enrollments through Google Vertex.", "marks": ["Claude via Azure", "Gemini via Vertex (IL5)"], "status": "GA — June 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-06.md", "sources": [{"label": "releases", "ref": "2026-06.md"}]}, {"n": 49, "id": "fine-grained-tokens", "name": "Fine-Grained Personal Tokens", "layer": "devtools", "tagline": "Scoped API tokens instead of all-or-nothing access.", "description": "Community-requested and discussed: personal access tokens scoped to specific permissions rather than full account access.", "marks": ["Community thread: active feature discussion"], "status": "Community-tracked", "statusClass": "st-community", "firstObserved": "community/6051", "sources": [{"label": "community", "ref": "6051-fine-grained-personal-tokens.md"}]}, {"n": 50, "id": "superrepo-foundry-cli", "name": "SuperRepo & Foundry CLI", "layer": "devtools", "tagline": "A pro-code monorepo — Ontology-as-code, Functions, and a React app, deployed as one artifact.", "description": "A single monorepo holding Ontology definitions (in TypeScript), Functions, and a React front-end, developed locally against an embedded Ontology server and deployed as a signed Marketplace product via the Rust-based Foundry CLI (`foundry create` / `foundry deploy`). Previewed at DevCon 5 under the internal codename \"SuperRepo\"; reached public beta in August 2026.", "marks": ["Embedded local Ontology server — no Foundry connection needed to iterate", "Ontology-as-code with auto-regenerated OSDK on every save", "Compiles to a signed Marketplace product", "Python functions, Automate, and data pipelines not yet supported"], "status": "Beta — Aug 4, 2026", "statusClass": "st-beta", "firstObserved": "devcon5/product-launch-developer-experience-devcon-5 (preview); releases/2026-08.md (beta)", "sources": [{"label": "devcon5", "ref": "product-launch-developer-experience-devcon-5"}, {"label": "releases", "ref": "2026-08.md"}]}, {"n": 51, "id": "workflow-lineage", "name": "Workflow Lineage", "layer": "governance", "tagline": "End-to-end lineage across pipelines, ontology, and apps.", "description": "Traces data and decision lineage across the full workflow, not just within a single pipeline. A community AMA covered 'the story behind the rename' — this product has iterated on naming/scope.", "marks": ["Cross-boundary lineage (pipelines → ontology → apps)"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "workflow-lineage-overview.md"}, {"label": "community", "ref": "5575"}]}, {"n": 52, "id": "aip-observability", "name": "Ontology & AIP Observability", "layer": "governance", "tagline": "Monitoring the AI layer itself, not just pipelines.", "description": "Purpose-built observability for Ontology and AIP usage/behavior — distinct from general pipeline observability.", "marks": ["AI-layer-specific monitoring"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "aip-observability-overview.md"}]}, {"n": 53, "id": "data-health", "name": "Data Health", "layer": "governance", "tagline": "Automated dataset health checks.", "description": "Automated checks on dataset quality/freshness/health, surfaced in Pipeline Builder and elsewhere.", "marks": ["Composable by agents (per DevCon 5 keynote framing)"], "status": "GA", "statusClass": "st-ga", "firstObserved": "Documented baseline", "sources": [{"label": "docs", "ref": "observability-data-health.md"}]}, {"n": 54, "id": "object-timeline-autopilot", "name": "Object Timeline (Autopilot Observability)", "layer": "governance", "tagline": "Per-object audit trail of every agent and human edit, with token/runtime cost attribution.", "description": "A timeline view showing every action taken on an Ontology object — by agents (Autopilot) or humans — with full attribution, token usage, runtime, and waiting time, so builders can see where an agentic workflow is spending time or money and trace any edit back to the execution that made it. Accessible from Autopilot's graph view or Object Explorer.", "marks": ["Token usage per step", "Agentic vs. human coverage split", "Traces any edit back to its execution"], "status": "GA — Aug 11, 2026", "statusClass": "st-ga", "firstObserved": "releases/2026-08.md", "sources": [{"label": "releases", "ref": "2026-08.md"}]}, {"n": 55, "id": "saios-nemotron", "name": "Sovereign Nemotron Supply-Chain Stack (SAIOS)", "layer": "frontier", "tagline": "NVIDIA + Palantir: open models, post-trained on your data, run inside Foundry.", "description": "NVIDIA Nemotron open models post-trained on customer operational data, run inside Foundry + AIP, grounded by the Ontology, with NVIDIA cuOpt doing optimization. Deployed via the Palantir Sovereign AI Operating System Reference Architecture (on-prem via Cisco/Dell, or cloud/colo via Rackspace/Nebius). Announced 2026-09-10 at AIPCon 11; NVIDIA is customer zero, applying it across 1.3M parts in a Vera Rubin rack.", "marks": ["NOT YET IN OFFICIAL DOCS as of last refresh", "NVIDIA = customer zero", "On-prem or cloud/colo deployment"], "status": "Announced — Sept 10, 2026 (AIPCon 11)", "statusClass": "st-announced", "firstObserved": "company-context/2026-09-16.md", "sources": [{"label": "company-context", "ref": "2026-09-16.md — NVIDIA Newsroom"}]}, {"n": 56, "id": "cardinal-program", "name": "Cardinal Program / Ontology for Cybersecurity", "layer": "frontier", "tagline": "Free autonomous red-teaming for U.S. critical infrastructure.", "description": "With Method Security: free, opt-in, continuous autonomous red-teaming for U.S. municipalities/utilities/critical-infrastructure operators. A new 'Ontology for Cybersecurity' maps findings to real mission impact; AIP validates repeatable automated assessment workflows.", "marks": ["NOT YET IN OFFICIAL DOCS as of last refresh", "Free for eligible operators", "New product: Ontology for Cybersecurity"], "status": "Announced — Sept 10, 2026 (AIPCon 11)", "statusClass": "st-announced", "firstObserved": "company-context/2026-09-16.md", "sources": [{"label": "company-context", "ref": "2026-09-16.md — Cardinal Program / Method Security"}]}, {"n": 57, "id": "sovereignty-positioning", "name": "'AI Sovereignty' Strategic Positioning", "layer": "frontier", "tagline": "Palantir's bet: the control layer, not the frontier model.", "description": "Karp's public framing (AIPCon 11 + recirculated from the Q2 2026 shareholder letter): Palantir isn't competing to build the best frontier model — it's positioning as the sovereign application/control layer so customers keep 'maximal control' over data, operations, and decisions.", "marks": ["Commentary/strategy, not a product", "Traces to Q2 2026 shareholder letter"], "status": "Public statement — Sept 2026", "statusClass": "st-statement", "firstObserved": "company-context/2026-09-16.md", "sources": [{"label": "company-context", "ref": "2026-09-16.md — The Motley Fool"}]}]};
+  var layers = DATA.layers, features = DATA.features;
+  var layerById = {}; layers.forEach(function(l){ layerById[l.id]=l; });
+
+  document.getElementById('statTotal').textContent = features.length;
+  document.getElementById('statGA').textContent = features.filter(function(f){return f.statusClass==='st-ga';}).length;
+  document.getElementById('statDate').textContent = DATA.generated;
+  document.getElementById('footDate').textContent = DATA.generated;
+
+  var state = { query:'', activeLayers:new Set(), order:features.map(function(f){return f.id;}) };
+
+  // ---- layer chips ----
+  var chipsEl = document.getElementById('layerChips');
+  layers.forEach(function(l){
+    var n = features.filter(function(f){return f.layer===l.id;}).length;
+    var chip = document.createElement('button');
+    chip.className = 'chip'; chip.style.setProperty('--dot', l.color);
+    chip.innerHTML = '<span class="dot"></span>' + l.name + ' <span class="mono" style="opacity:.6">'+n+'</span>';
+    chip.addEventListener('click', function(){
+      if(state.activeLayers.has(l.id)) state.activeLayers.delete(l.id); else state.activeLayers.add(l.id);
+      chip.classList.toggle('active');
+      render();
+    });
+    chipsEl.appendChild(chip);
+  });
+  var clearChip = document.createElement('button');
+  clearChip.className = 'chip clear'; clearChip.textContent = 'Clear filters';
+  clearChip.addEventListener('click', function(){
+    state.activeLayers.clear();
+    chipsEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});
+    render();
+  });
+  chipsEl.appendChild(clearChip);
+
+  // ---- search ----
+  var searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', function(){ state.query = this.value.trim().toLowerCase(); render(); });
+
+  function matches(f){
+    if(state.activeLayers.size && !state.activeLayers.has(f.layer)) return false;
+    if(!state.query) return true;
+    var hay = [f.name, f.tagline, f.description, f.status, layerById[f.layer].name, f.marks.join(' ')].join(' ').toLowerCase();
+    return state.query.split(/\s+/).every(function(term){ return hay.indexOf(term) !== -1; });
+  }
+
+  var indexEl = document.getElementById('index');
+  var countLine = document.getElementById('countLine');
+
+  function render(){
+    var filtered = features.filter(matches);
+    state.order = filtered.map(function(f){return f.id;});
+    countLine.textContent = filtered.length + ' of ' + features.length + ' specimens shown';
+    indexEl.innerHTML = '';
+    if(!filtered.length){
+      indexEl.innerHTML = '<div class="empty"><span class="serif">No specimens match.</span>Try a different term or clear filters.</div>';
+      return;
+    }
+    filtered.forEach(function(f){
+      var l = layerById[f.layer];
+      var card = document.createElement('button');
+      card.className = 'card'; card.style.setProperty('--layer-color', l.color);
+      card.innerHTML =
+        '<span class="num">No. ' + String(f.n).padStart(2,'0') + '</span>' +
+        '<h3>' + f.name + '</h3>' +
+        '<span class="tag">' + f.tagline + '</span>' +
+        '<span class="meta"><span class="layer-label">' + l.name + '</span>' +
+        '<span class="badge ' + f.statusClass + '">' + f.status.split('—')[0].split('(')[0].trim() + '</span></span>';
+      card.addEventListener('click', function(){ openPlate(f.id); });
+      indexEl.appendChild(card);
+    });
+  }
+
+  // ---- plate (detail) view ----
+  var plateSection = document.getElementById('plate');
+  var plateCard = document.getElementById('plateCard');
+  var controlsEl = document.getElementById('controls');
+  var currentId = null;
+
+  function featureById(id){ return features.filter(function(f){return f.id===id;})[0]; }
+
+  function renderPlate(f, animate){
+    var l = layerById[f.layer];
+    var sourcesHtml = f.sources.map(function(s){
+      return '<li><b>' + s.label + '</b> · ' + s.ref + '</li>';
+    }).join('');
+    plateCard.style.setProperty('--layer-color', l.color);
+    plateCard.innerHTML =
+      '<div class="plate-eyebrow"><span class="specimen-no mono">Specimen No. ' + String(f.n).padStart(2,'0') + '</span>' +
+      '<span class="layer-label" style="color:' + l.color + '">' + l.name + '</span>' +
+      '<span class="badge ' + f.statusClass + '">' + f.status + '</span></div>' +
+      '<h2>' + f.name + '</h2>' +
+      '<p class="plate-tag">' + f.tagline + '</p>' +
+      '<p class="plate-desc">' + f.description + '</p>' +
+      '<div class="plate-grid">' +
+        '<div class="side-block"><span class="side-label">Field marks</span><ul class="field-marks">' +
+          f.marks.map(function(m){return '<li>'+m+'</li>';}).join('') + '</ul></div>' +
+        '<div>' +
+          '<div class="side-block"><span class="side-label">First observed</span><div class="mono" style="font-size:13px">' + f.firstObserved + '</div></div>' +
+          '<div class="side-block"><span class="side-label">Sources</span><ul class="sources-list">' + sourcesHtml + '</ul></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="plate-footer"><span>foundry-expert knowledge base</span><span>' + DATA.generated + '</span></div>';
+    if(animate){
+      plateCard.classList.remove('animating'); void plateCard.offsetWidth; plateCard.classList.add('animating');
+    }
+    document.getElementById('plateCounter').textContent = (state.order.indexOf(f.id)+1) + ' / ' + state.order.length;
+    document.getElementById('prevBtn').disabled = state.order.indexOf(f.id) <= 0;
+    document.getElementById('nextBtn').disabled = state.order.indexOf(f.id) >= state.order.length-1;
+  }
+
+  function openPlate(id, animate){
+    currentId = id;
+    renderPlate(featureById(id), animate!==false);
+    plateSection.classList.add('open');
+    indexEl.classList.add('hidden'); controlsEl.classList.add('hidden'); countLine.classList.add('hidden');
+    if(history.replaceState) history.replaceState(null, '', '#'+id);
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+  function closePlate(){
+    currentId = null;
+    plateSection.classList.remove('open');
+    indexEl.classList.remove('hidden'); controlsEl.classList.remove('hidden'); countLine.classList.remove('hidden');
+    if(history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+  }
+  function step(delta){
+    if(currentId===null) return;
+    var i = state.order.indexOf(currentId) + delta;
+    if(i<0 || i>=state.order.length) return;
+    openPlate(state.order[i]);
+  }
+
+  document.getElementById('backBtn').addEventListener('click', closePlate);
+  document.getElementById('prevBtn').addEventListener('click', function(){ step(-1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ step(1); });
+
+  document.addEventListener('keydown', function(e){
+    if(!plateSection.classList.contains('open')) return;
+    if(e.key==='ArrowRight') step(1);
+    else if(e.key==='ArrowLeft') step(-1);
+    else if(e.key==='Escape') closePlate();
+  });
+
+  // simple swipe (touch/trackpad drag) on the plate card
+  var touchX = null;
+  plateCard.addEventListener('touchstart', function(e){ touchX = e.touches[0].clientX; }, {passive:true});
+  plateCard.addEventListener('touchend', function(e){
+    if(touchX===null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if(Math.abs(dx) > 60) step(dx < 0 ? 1 : -1);
+    touchX = null;
+  }, {passive:true});
+
+  render();
+
+  // deep-link on load
+  var hash = location.hash.replace('#','');
+  if(hash && featureById(hash)) openPlate(hash, false);
+})();
+</script>
